@@ -1,6 +1,7 @@
 # FHIR-OCR-AI
 
 # install
+
  1. It is necessary to install the healthshare irisfhir server first
 
  2. Embedded Python requires installation
@@ -36,6 +37,7 @@ Enter the settings page first after accessing
 
 ② : Google Bard Cookie
   Need to have an account that can access Google Bard
+  
   ![image](https://github.com/AAdacangjiujiu/FHIR-OCR-AI/assets/144994347/7e4fe87b-e710-45da-a11e-d88e86e62cb7)
   
 ③ Zhipu's personal key https://open.bigmodel.cn/usercenter/apikeys
