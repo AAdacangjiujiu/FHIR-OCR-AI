@@ -50,8 +50,8 @@ ClassMethod GetResponse(ByRef pRequest As %Net.HttpRequest, ByRef id1, ByRef id2
 ClassMethod RequestSet(ByRef OutRequest As %Net.HttpRequest) As %Status
 {
     set httpRequest=##class(%Net.HttpRequest).%New()	
-    //-----根据需要设置代理---//
-    set httpRequest.ProxyPort="15236"
+   
+    //set httpRequest.ProxyPort="15236"
     set httpRequest.ProxyServer="localhost"
     set httpRequest.ProxyHTTPS=1
     set httpRequest.ProxyTunnel=1
