@@ -1,13 +1,13 @@
 # FHIR-OCR-AI
 
 # install
- 1. It is necessary to install the irisfhir server first
+ 1. It is necessary to install the healthshare irisfhir server first
 
  2. Embedded Python requires installation
 
- ① Pip install pytesseract
+   ① Pip install pytesseract
 
- ② Pip install zhipuai
+   ② Pip install zhipuai
 
  3. Install Google Tesseract
 
@@ -16,6 +16,7 @@
   Linux/Mac https://tesseract-ocr.github.io/tessdoc/Installation.html
 
  4. Create SSL/tls www.google-analytics.com
+    
     ![image](https://github.com/AAdacangjiujiu/FHIR-OCR-AI/assets/144994347/83e3a39d-6f6c-49c5-a0d7-8832987e17f9)
 
 # zpm
@@ -23,7 +24,7 @@
 
 # Access address
 
-ip:port/csp/fhir-ocr-ai/index1.csp
+  ip:port/csp/fhir-ocr-ai/index1.csp
 
 # Setting
 
@@ -36,6 +37,7 @@ Enter the settings page first after accessing
 ② : Google Bard Cookie
   Need to have an account that can access Google Bard
   ![image](https://github.com/AAdacangjiujiu/FHIR-OCR-AI/assets/144994347/7e4fe87b-e710-45da-a11e-d88e86e62cb7)
+  
 ③ Zhipu's personal key https://open.bigmodel.cn/usercenter/apikeys
 
 # How to use
