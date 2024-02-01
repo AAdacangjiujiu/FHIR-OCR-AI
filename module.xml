@@ -3,7 +3,7 @@
   <Document name="imagetofhirresource.ZPM">
     <Module>
       <Name>imagetofhirresource</Name>
-      <Version>0.0.1</Version>
+      <Version>0.0.2</Version>
       <Packaging>module</Packaging>
       <Resource Name="Bard.PKG"/>
       <Resource Name="OCR.PKG"/>
