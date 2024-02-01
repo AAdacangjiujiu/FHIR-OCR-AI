@@ -75,20 +75,23 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                <div class="row">
+                <div class="row" >
                     <div class="col-md-4">
-                        <select id="resourceType3" class="form-select" aria-label="Default select example">
+                        <select id="resourceType3" onchange="getSearchArray()" class="form-select" aria-label="Default select example">
 
 
                         </select>
                     </div>
+                     <div  class="col-md-4">
+                       <button onclick="getData()" class="btn btn-success">select</button>
+                    </div>
+                </div>
+                 <div id="Search" class="row" style="height:100px;overflow-y:auto">
+                    
                 </div>
 
 
-
-                <div id="toolbar">
-                    <button onclick="getData()">select</button>
-                </div>
+               
                 <div class="table-demo">
                     <table id="table1"></table>
                 </div>
@@ -145,7 +148,7 @@
     </div>
 
     <script>
-        //ÉèÖÃĞèÒªÏÔÊ¾µÄÁĞ
+        //è®¾ç½®éœ€è¦æ˜¾ç¤ºçš„åˆ—
         var columns = [
             {
                 field: "resource.id",
@@ -181,9 +184,9 @@
             }
         ];
 
-        //ĞèÒªÏÔÊ¾µÄÊı¾İ
+        //éœ€è¦æ˜¾ç¤ºçš„æ•°æ®
         var data = [];
-        //bootstrap table³õÊ¼»¯Êı¾İ
+        //bootstrap tableåˆå§‹åŒ–æ•°æ®
         $('#table1').bootstrapTable({
             toolbar: "#toolbar",
             columns: columns,
