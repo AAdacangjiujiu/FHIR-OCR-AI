@@ -78,6 +78,7 @@ function getList(){
 				         sel3.options.add(opt3);
 				       // sel3.options.add(opt);
 		        }
+		        getSearchArray()
                // console.log(result);
                 //document.getElementById("exampleFormControlTextarea1").value = result;
                 //var sel = document.getElementById("sel");
@@ -100,40 +101,81 @@ function sendFhir(){
     contentType: "application/fhir+json",
     data: fhirjson,
    success:function (data) {
-       	//³É¹¦ºóÖ´ĞĞµÄ²Ù×÷ 
-       	 alert("Ìí¼Ó³É¹¦")   
+       	//æˆåŠŸåæ‰§è¡Œçš„æ“ä½œ 
+       	 alert("æ·»åŠ æˆåŠŸ")   
        	    
    },
    error:function (data) {
-       // ÇëÇóÊ§°ÜºóÖ´ĞĞµÄ²Ù×÷      
+       // è¯·æ±‚å¤±è´¥åæ‰§è¡Œçš„æ“ä½œ      
        alert(JSON.stringify(data))       
    }
 })
 }
 
+
+    function getSearchArray()
+    {
+	      $.ajax('http://'+fhirserverip+'/OCR/Util/getSearchList', {
+      
+            method: 'POST',
+            data: {resourceType:$('#resourceType3').val() },
+            dataType:"json",
+            success:function (Array) {
+                console.log(Array);
+                $('#Search').html("")
+                try {
+                //Array=JSON.parse(result)
+                for (var key in Array){
+                    $('#Search').append("<div class='col-md-4 '><div class='input-group mb-3'><span class='input-group-text'>"+Array[key]+"</span><input id='"+Array[key]+"' class='form-control'></input></div></div>")
+                }}catch (e){}
+
+            },
+            error:function (err) {
+                console.log(err);
+            }
+        })
+	    
+	 }
    
      function getData()
       {
+	      var searchData="?"
+	      $("#Search input").each(function () {
+ 
+              console.log(this.id);
+              console.log(this.value);
+              if (this.value!="")
+              {
+	              searchData=searchData+this.id+"="+this.value+"&"
+	          }
+ 
+          })
      //var data= $('#table1').bootstrapTable('getData',{useCurrentPage:true,includeHiddenRows:true});
        //alert(JSON.stringify(data));
          var type=document.getElementById('resourceType3').value
+        // console.log("?????????")
         $.ajax({
-	url:'http://'+fhirserverip+'/csp/healthshare/fhirserver/fhir/r4/'+type,
+	url:'http://'+fhirserverip+'/csp/healthshare/fhirserver/fhir/r4/'+type+searchData,
     type:"GET",
     dataType:"json",
     contentType: "application/fhir+json",
     data: "",
-   success:function (data) {
-       	//³É¹¦ºóÖ´ĞĞµÄ²Ù×÷ 
-       	 //alert("Ìí¼Ó³É¹¦")    
+   success:function (data) { 
+      console.log(data)
+       	//æˆåŠŸåæ‰§è¡Œçš„æ“ä½œ 
+       	 //alert("æ·»åŠ æˆåŠŸ")  
+       	 if ( data.entry){  
        	 var data = data.entry;
-        //bootstrap table³õÊ¼»¯Êı¾İ
+       	 }else{
+	       	  var data =[]
+	       	 }
+        //bootstrap tableåˆå§‹åŒ–æ•°æ®
        
         $("#table1").bootstrapTable('refreshOptions',{columns: columns, 
             data: data,pageNumber:1}); 
    },
    error:function (data) {
-       // ÇëÇóÊ§°ÜºóÖ´ĞĞµÄ²Ù×÷      
+       // è¯·æ±‚å¤±è´¥åæ‰§è¡Œçš„æ“ä½œ      
       // alert(JSON.stringify(data))       
    }
 })
@@ -151,7 +193,7 @@ function sendFhir(){
             data: {key1:key1 },
             success:function (result) {
                 //console.log(result);
-                alert("±£´æ³É¹¦")
+                alert("ä¿å­˜æˆåŠŸ")
                 //document.getElementById("exampleFormControlTextarea1").value = result;
                 
             },
@@ -173,7 +215,7 @@ function sendFhir(){
             data: {key1:key1,key2:key2 },
             success:function (result) {
                 //console.log(result);
-                alert("±£´æ³É¹¦")
+                alert("ä¿å­˜æˆåŠŸ")
                 //document.getElementById("exampleFormControlTextarea1").value = result;
                 
             },
@@ -184,7 +226,7 @@ function sendFhir(){
   }
   function saveIP(){
 	  localStorage.setItem("fhirserverip", document.getElementById('fhirserverip').value);
-	  alert("±£´æ³É¹¦")
+	  alert("ä¿å­˜æˆåŠŸ")
 	 }
 
 //console.log(document.getElementById('fhirserverip').value)
