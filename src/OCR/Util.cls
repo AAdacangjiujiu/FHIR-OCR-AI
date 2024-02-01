@@ -3,9 +3,10 @@ Class OCR.Util Extends %CSP.REST
 
 Parameter HandleCorsRequest = "true";
 
-XData UrlMap [ XMLNamespace = "http://www.bjgoodwill.com/urlmap" ]
+XData UrlMap
 {
 <Routes>
+
   <Route Url="/*" Method="OPTIONS" Call="GetStatus"/>
   <Route Url="/ImageToString" Method="POST" Call="ImageToString"/>
  <Route Url="/getFHIR" Method="POST" Call="getFHIR"/>
@@ -13,6 +14,8 @@ XData UrlMap [ XMLNamespace = "http://www.bjgoodwill.com/urlmap" ]
   <Route Url="/setBard" Method="POST" Call="setBard" />
  
   <Route Url="/getList" Method="POST" Call="getList" />
+   <Route Url="/getSearchList" Method="POST" Call="getSearchList" />
+  
 </Routes>
 }
 
@@ -23,8 +26,8 @@ try:
     from PIL import Image
 except ImportError:
     import Image
-
 print(pytesseract.image_to_string(Image.open(url), lang='chi_sim+ens'))
+
 return 1
 }
 
@@ -127,5 +130,21 @@ ClassMethod getList() As %Status
     QUIT $$$OK
 }
 
+ClassMethod getSearchList() As %Status
+{
+   set schema = ##class(HS.FHIRServer.Schema).LoadSchema("hl7.fhir.r4.core@4.0.1")
+   set name=""
+   set searchArray=[]
+   set resourceType=%request.Data("resourceType",1)
+   set name= schema.NextSearchParamName(resourceType, "")
+   while name'=""
+   {
+	  Do searchArray.%Push(name)   
+	  
+	  set name= schema.NextSearchParamName(resourceType, name)
+   }
+   w searchArray.%ToJSON(),!
+   Quit $$$OK
 }
 
+}
