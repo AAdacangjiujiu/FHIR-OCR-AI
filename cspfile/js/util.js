@@ -100,13 +100,15 @@ function sendFhir(){
     dataType:"json",
     contentType: "application/fhir+json",
     data: fhirjson,
+    beforeSend:function(xhr){
+    xhr.setRequestHeader ("Authorization","Basic X3N5c3RlbTpqaWFoZW1r");},
    success:function (data) {
-       	//³É¹¦ºóÖ´ĞĞµÄ²Ù×÷ 
-       	 alert("Ìí¼Ó³É¹¦")   
+       	//æˆåŠŸåæ‰§è¡Œçš„æ“ä½œ 
+       	 alert("æ·»åŠ æˆåŠŸ")   
        	    
    },
    error:function (data) {
-       // ÇëÇóÊ§°ÜºóÖ´ĞĞµÄ²Ù×÷      
+       // è¯·æ±‚å¤±è´¥åæ‰§è¡Œçš„æ“ä½œ      
        alert(JSON.stringify(data))       
    }
 })
@@ -159,23 +161,25 @@ function sendFhir(){
     type:"GET",
     dataType:"json",
     contentType: "application/fhir+json",
+    beforeSend:function(xhr){
+    xhr.setRequestHeader ("Authorization","Basic X3N5c3RlbTpqaWFoZW1r");},
     data: "",
    success:function (data) { 
       console.log(data)
-       	//³É¹¦ºóÖ´ĞĞµÄ²Ù×÷ 
-       	 //alert("Ìí¼Ó³É¹¦")  
+       	//æˆåŠŸåæ‰§è¡Œçš„æ“ä½œ 
+       	 //alert("æ·»åŠ æˆåŠŸ")  
        	 if ( data.entry){  
        	 var data = data.entry;
        	 }else{
 	       	  var data =[]
 	       	 }
-        //bootstrap table³õÊ¼»¯Êı¾İ
+        //bootstrap tableåˆå§‹åŒ–æ•°æ®
        
         $("#table1").bootstrapTable('refreshOptions',{columns: columns, 
             data: data,pageNumber:1}); 
    },
    error:function (data) {
-       // ÇëÇóÊ§°ÜºóÖ´ĞĞµÄ²Ù×÷      
+       // è¯·æ±‚å¤±è´¥åæ‰§è¡Œçš„æ“ä½œ      
       // alert(JSON.stringify(data))       
    }
 })
@@ -193,7 +197,7 @@ function sendFhir(){
             data: {key1:key1 },
             success:function (result) {
                 //console.log(result);
-                alert("±£´æ³É¹¦")
+                alert("ä¿å­˜æˆåŠŸ")
                 //document.getElementById("exampleFormControlTextarea1").value = result;
                 
             },
@@ -215,7 +219,7 @@ function sendFhir(){
             data: {key1:key1,key2:key2 },
             success:function (result) {
                 //console.log(result);
-                alert("±£´æ³É¹¦")
+                alert("ä¿å­˜æˆåŠŸ")
                 //document.getElementById("exampleFormControlTextarea1").value = result;
                 
             },
@@ -226,7 +230,7 @@ function sendFhir(){
   }
   function saveIP(){
 	  localStorage.setItem("fhirserverip", document.getElementById('fhirserverip').value);
-	  alert("±£´æ³É¹¦")
+	  alert("ä¿å­˜æˆåŠŸ")
 	 }
 
 //console.log(document.getElementById('fhirserverip').value)
