@@ -3,12 +3,18 @@
   <Document name="imagetofhirresource.ZPM">
     <Module>
       <Name>imagetofhirresource</Name>
-      <Version>0.0.3</Version>
+      <Version>0.0.4</Version>
       <Packaging>module</Packaging>
       <Resource Name="Bard.PKG"/>
       <Resource Name="OCR.PKG"/>
-      <CSPApplication CookiePath="/OCR/Util/" DefaultTimeout="900" DispatchClass="OCR.Util" GroupById="%ISCMgtPortal" MatchRoles=":%All" PasswordAuthEnabled="1" Recurse="1" ServeFiles="1" ServeFilesTimeout="3600" UnauthenticatedEnabled="0" Url="/OCR/Util" UseSessionCookie="2"/>
-      <CSPApplication CookiePath="/csp/FHIR-OCR-AI/" DefaultTimeout="900" DeployPath="${cspdir}FHIR-OCR-AI\" GroupById="%ISCMgtPortal" PasswordAuthEnabled="1" Recurse="1" ServeFiles="1" ServeFilesTimeout="3600" SourcePath="/cspfile" UnauthenticatedEnabled="0" Url="/csp/FHIR-OCR-AI" UseSessionCookie="2"/>
+      <Resource Name="fhirserver.PKG"/>
+      <Invokes>
+        <Invoke Class="fhirserver.util" Method="SetupServer" Phase="Activate" When="After" ></Invoke>
+      </Invokes>
+      <CSPApplication CookiePath="/ocr/util/" DefaultTimeout="900" DispatchClass="OCR.Util" GroupById="%ISCMgtPortal" MatchRoles=":%All" PasswordAuthEnabled="1" Recurse="1" ServeFilesTimeout="3600" UnauthenticatedEnabled="0" Url="/OCR/Util" UseSessionCookie="2"/>
+      <CSPApplication CookiePath="/csp/FHIR-OCR-AI/css/" DefaultTimeout="900" DeployPath="${cspdir}FHIR-OCR-AI\css\" GroupById="%ISCMgtPortal" PasswordAuthEnabled="1" Recurse="1" ServeFiles="2" ServeFilesTimeout="3600" SourcePath="/cspfile/css" UnauthenticatedEnabled="0" Url="/csp/FHIR-OCR-AI/css" UseSessionCookie="2"/>
+      <CSPApplication CookiePath="/csp/FHIR-OCR-AI/js/" DefaultTimeout="900" DeployPath="${cspdir}FHIR-OCR-AI\js\" GroupById="%ISCMgtPortal" PasswordAuthEnabled="1" Recurse="1" ServeFiles="2" ServeFilesTimeout="3600" SourcePath="/cspfile/js" UnauthenticatedEnabled="0" Url="/csp/FHIR-OCR-AI/js" UseSessionCookie="2"/>
+      <CSPApplication CookiePath="/csp/FHIR-OCR-AI/" DefaultTimeout="900" DeployPath="${cspdir}FHIR-OCR-AI\" GroupById="%ISCMgtPortal" PasswordAuthEnabled="1" Recurse="1" ServeFiles="2" ServeFilesTimeout="3600" SourcePath="/cspfile" UnauthenticatedEnabled="0" Url="/csp/FHIR-OCR-AI" UseSessionCookie="2"/>
       <SourcesRoot>src</SourcesRoot>
     </Module>
   </Document>
