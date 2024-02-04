@@ -15,6 +15,7 @@ XData UrlMap
  
   <Route Url="/getList" Method="POST" Call="getList" />
    <Route Url="/getSearchList" Method="POST" Call="getSearchList" />
+   <Route Url="/getDisplsyList" Method="POST" Call="getDisplsyList" />
   
 </Routes>
 }
@@ -132,19 +133,51 @@ ClassMethod getList() As %Status
 
 ClassMethod getSearchList() As %Status
 {
+	set ns=$namespace
+	zn "fhirserver"
+   //set schema = ##class(HS.FHIRServer.Schema).%New()
    set schema = ##class(HS.FHIRServer.Schema).LoadSchema("hl7.fhir.r4.core@4.0.1")
    set name=""
    set searchArray=[]
    set resourceType=%request.Data("resourceType",1)
    set name= schema.NextSearchParamName(resourceType, "")
+   
    while name'=""
    {
+	   zw name
 	  Do searchArray.%Push(name)   
-	  
+	  set fname=$Get(@schema.TiGbl@(resourceType, name, "dt"))
 	  set name= schema.NextSearchParamName(resourceType, name)
+	  
    }
-   w searchArray.%ToJSON(),!
+   //Do ..getDisplsyList(resourceType)
+   set result={}
+   set result.searchArray=searchArray
+   set result.displsyList=..getDisplsyList(resourceType)
+   zn ns
+   w result.%ToJSON(),!
    Quit $$$OK
+}
+
+ClassMethod getDisplsyList(resourceType) As %Status
+{
+	
+	set displayList=[]
+	//set resourceType=%request.Data("resourceType",1)
+	//set resourceType="Patient"
+	set schema = ##class(HS.FHIRServer.Schema).LoadSchema("hl7.fhir.r4.core@4.0.1")
+	set name=$Order(@schema.TiGbl@(resourceType, "*rq", ""))
+	while name'=""
+	{
+		set temp={}
+		set temp.field=name
+		set temp.title=name
+		Do displayList.%Push(temp)
+		set name=$Order(@schema.TiGbl@(resourceType, "*rq", name))
+		
+	}
+	//w displayList.%ToJSON()
+    Quit displayList
 }
 
 }
