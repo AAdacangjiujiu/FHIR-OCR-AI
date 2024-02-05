@@ -115,8 +115,10 @@ ClassMethod setBard() As %Status
 
 ClassMethod getList() As %Status
 {
+	set ns=$namespace
+	zn "fhirserver"
 	SET Array=[]
-	set Sql="SELECT  ID FROM %Dictionary.ClassDefinition where ID like 'HSFHIR.X0011.S.%'"
+	set Sql="SELECT  ID FROM %Dictionary.ClassDefinition where ID like 'HSFHIR.X0014.S.%'"
 	Set statement = ##class(%SQL.Statement).%New()
 	Set qStatus = statement.%Prepare(Sql)
 	Set rset = statement.%Execute()
@@ -127,6 +129,7 @@ ClassMethod getList() As %Status
 			   	Do Array.%Push($p(ID,".",4))
 			 }
     }
+    zn ns
     w Array.%ToJSON()
     QUIT $$$OK
 }
@@ -144,8 +147,13 @@ ClassMethod getSearchList() As %Status
    
    while name'=""
    {
-	   zw name
-	  Do searchArray.%Push(name)   
+	  // zw name
+	  set temp={}
+	  set temp.name=name
+	  set temp.path=schema.FindSearchParam(resourceType, name).fhirPath
+	  Do searchArray.%Push(temp)   
+	  //set temp= schema.FindSearchParam(resourceType, name).fhirPath
+	  //w temp,!
 	  set fname=$Get(@schema.TiGbl@(resourceType, name, "dt"))
 	  set name= schema.NextSearchParamName(resourceType, name)
 	  
@@ -170,8 +178,11 @@ ClassMethod getDisplsyList(resourceType) As %Status
 	while name'=""
 	{
 		set temp={}
-		set temp.field=name
+		set temp.field="resource."_name
 		set temp.title=name
+		
+		
+		
 		Do displayList.%Push(temp)
 		set name=$Order(@schema.TiGbl@(resourceType, "*rq", name))
 		
