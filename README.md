@@ -23,6 +23,14 @@
 # zpm
   imagetofhirresource
 
+  tips：After installing the fhir server, it is necessary to import the production class or create new related BS and BO
+
+  ![image](https://github.com/ADAqiqizi/FHIR-OCR-AI/assets/144994347/c3aea5e8-cd9d-468c-85ed-526cc42ef3b1)
+
+  ![image](https://github.com/ADAqiqizi/FHIR-OCR-AI/assets/144994347/913c0dab-0c01-4393-acf3-598fee167614)
+
+
+
 # Access address
 
   ip:port/csp/fhir-ocr-ai/index1.csp
@@ -41,6 +49,14 @@ Enter the settings page first after accessing
   ![image](https://github.com/AAdacangjiujiu/FHIR-OCR-AI/assets/144994347/7e4fe87b-e710-45da-a11e-d88e86e62cb7)
   
 ③ Zhipu's personal key https://open.bigmodel.cn/usercenter/apikeys
+
+④ update Add Authorization configuration to fill in the Authorization of the fhir server interface
+
+ ![image](https://github.com/ADAqiqizi/FHIR-OCR-AI/assets/144994347/c1953e74-272e-4c7d-b99e-e66627cb7ae7)
+
+ ![image](https://github.com/ADAqiqizi/FHIR-OCR-AI/assets/144994347/21866b26-1c8a-460a-b654-a792bbb7de2f)
+
+
 
 # How to use
 
