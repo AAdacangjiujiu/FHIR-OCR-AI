@@ -1,5 +1,6 @@
 var fhirserverip="localhost"
 fhirserverip=localStorage.getItem("fhirserverip")
+fhirAuthorization=localStorage.getItem("fhirAuthorization")
 console.log(fhirserverip)
 
 function imagetotext(){
@@ -101,7 +102,7 @@ function sendFhir(){
     contentType: "application/fhir+json",
     data: fhirjson,
     beforeSend:function(xhr){
-    xhr.setRequestHeader ("Authorization","Basic X3N5c3RlbTpqaWFoZW1r");},
+    xhr.setRequestHeader ("Authorization",document.getElementById('Authorization').value);},
    success:function (data) {
        	//成功后执行的操作 
        	 alert("添加成功")   
@@ -123,16 +124,64 @@ function sendFhir(){
             data: {resourceType:$('#resourceType3').val() },
             dataType:"json",
             success:function (Array) {
-                console.log(Array);
+                
                 $('#Search').html("")
                 try {
                 //Array=JSON.parse(result)
-                for (var key in Array){
-                    $('#Search').append("<div class='col-md-4 '><div class='input-group mb-3'><span class='input-group-text'>"+Array[key]+"</span><input id='"+Array[key]+"' class='form-control'></input></div></div>")
+                for (var key in Array.searchArray){
+                    $('#Search').append("<div class='col-md-4 '><div class='input-group mb-3'><span class='input-group-text' data-bs-toggle='tooltip' data-bs-placement='top' title='"+Array.searchArray[key].path+"'>"+Array.searchArray[key].name+"</span><input id='"+Array.searchArray[key].name+"' class='form-control'></input></div></div>")
                 }}catch (e){}
+                //columns=Array.displsyList
+                columns=[]
+                 for (var key in Array.displsyList){
+	                 tempob={
+                field: Array.displsyList[key].field,
+                title: Array.displsyList[key].title,
+                align: 'center',
+                valign: 'middle',
+                width: 200,
+                
+                formatter: function (value, row, index) {
+                    var result = "";
+                    try {result +="<div>" + JSON.stringify(value, null, 2)+"</div>"}catch (e){result +="<div>" + value+"</div>"}
+                    //result += '123';
+
+                    return result;
+                }
+            }
+            columns.push(tempob)
+	                // columns.push()
+                  //  $('#Search').append("<div class='col-md-4 '><div class='input-group mb-3'><span class='input-group-text'>"+Array.searchArray[key]+"</span><input id='"+Array.searchArray[key]+"' class='form-control'></input></div></div>")
+                }
+                
+                columns.push({
+                field: 'operate',
+                title: 'operate',
+                align: 'center',
+                valign: 'middle',
+                width: 200,
+                events: {
+                    'click #edit': function (e, value, row, index) {
+
+                        //$('#id').val(row.Id);
+                        //$('#name').val(row.Name);
+                        //$('#gender').val(row.Gender);
+                        $('#modalbody').val(JSON.stringify(row, null, 2));
+                    },
+                    'click #delete': function (e, value, row, index) {
+                        //deleteInfo(row.Id);
+                    }
+                },
+                formatter: function (value, row, index) {
+                    var result = "";
+                    result += '<button id="edit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal" >view</button>';
+
+                    return result;
+                }
+            })
 
             },
-            error:function (err) {
+            error:function (err) { 
                 console.log(err);
             }
         })
@@ -162,7 +211,7 @@ function sendFhir(){
     dataType:"json",
     contentType: "application/fhir+json",
     beforeSend:function(xhr){
-    xhr.setRequestHeader ("Authorization","Basic X3N5c3RlbTpqaWFoZW1r");},
+    xhr.setRequestHeader ("Authorization",document.getElementById('Authorization').value);},
     data: "",
    success:function (data) { 
       console.log(data)
@@ -230,12 +279,19 @@ function sendFhir(){
   }
   function saveIP(){
 	  localStorage.setItem("fhirserverip", document.getElementById('fhirserverip').value);
-	  alert("保存成功")
+	  alert("Success")
 	 }
-
+  function setAuthorization(){
+	  localStorage.setItem("fhirAuthorization", document.getElementById('Authorization').value);
+	  alert("Success")
+	 }
 //console.log(document.getElementById('fhirserverip').value)
 
 $(function(){ 
 
 getList()
-document.getElementById('fhirserverip').value=fhirserverip });
+document.getElementById('fhirserverip').value=fhirserverip
+document.getElementById('Authorization').value=fhirAuthorization 
+ }
+
+);
