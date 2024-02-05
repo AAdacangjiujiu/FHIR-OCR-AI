@@ -118,6 +118,11 @@
                     <button type="button" class="btn btn-success" onclick="setzpKeys()">Save</button>
 
                 </div>
+                 <div class="input-group mb-3">
+                    <span class="input-group-text">Authorization:</span>
+                    <input type="text" id="Authorization" class="form-control" placeholder="">
+                    <button type="button" class="btn btn-success" onclick="setAuthorization()">Save</button>
+                </div>
             </div>
         </div>
     </div>
@@ -148,7 +153,7 @@
     </div>
 
     <script>
-        //ÉèÖÃĞèÒªÏÔÊ¾µÄÁĞ
+        //è®¾ç½®éœ€è¦æ˜¾ç¤ºçš„åˆ—
         var columns = [
             {
                 field: "resource.id",
@@ -184,9 +189,9 @@
             }
         ];
 
-        //ĞèÒªÏÔÊ¾µÄÊı¾İ
+        //éœ€è¦æ˜¾ç¤ºçš„æ•°æ®
         var data = [];
-        //bootstrap table³õÊ¼»¯Êı¾İ
+        //bootstrap tableåˆå§‹åŒ–æ•°æ®
         $('#table1').bootstrapTable({
             toolbar: "#toolbar",
             columns: columns,
