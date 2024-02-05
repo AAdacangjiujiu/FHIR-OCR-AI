@@ -11,20 +11,39 @@ ClassMethod SetupServer() As %Status
      Set metadataPackages = $lb("hl7.fhir.r4.core@4.0.1")
      zn "HSLIB"
      //Install a Foundation namespace and change to it
-     w "ns",!
-     Do ##class(HS.Util.Installer.Foundation).Install(ns)
-     zn ns
-     //Set $namespace = "FHIRNamespace"
-
-     // Install elements that are required for a FHIR-enabled namespace
-    Do ##class(HS.FHIRServer.Installer).InstallNamespace()
-
-    // Install an instance of a FHIR Service into the current namespace
-    Do ##class(HS.FHIRServer.Installer).InstallInstance(appKey, strategyClass, metadataPackages)
-    //zn 
+     IF ('##Class("%SYS.Namespace").Exists("FHIRSERVER")){
+        Do ##class(HS.Util.Installer.Foundation).Install(ns)
+         
+     }
     
+   
+    
+    try {
+     zn "%sys" 
+     if (##Class(Security.Applications).%OpenId(appKey)=""){ 
+     zn ns
+	     //w 111
+         Do ##class(HS.FHIRServer.Installer).InstallNamespace()
+         Do ##class(HS.FHIRServer.Installer).InstallInstance(appKey, strategyClass, metadataPackages)
+    
+       zn "%sys"   //Do ##class(HS.FHIRServer.Installer).InstallInstance(appKey, strategyClass, metadataPackages)
+     
+     }
+    ///修改web应用程序
+    
+    Set Application=##Class(Security.Applications).%OpenId("/csp/fhir-ocr-ai/js")
+	set Application.ServeFiles=2
+	Set tsc= Application.%Save()
+	Set Application=##Class(Security.Applications).%OpenId("/csp/fhir-ocr-ai/css")
+	set Application.ServeFiles=2
+	Set tsc= Application.%Save()
+	//创建应用程序
+	zn currenns
+    }catch e{
+	  zn "user"   
+	 // w 111
+	 }
     Quit $$$OK
 }
 
 }
-
